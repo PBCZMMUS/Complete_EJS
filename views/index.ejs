@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <!-- Include header partial -->
+    <%- include('partials/header.ejs', { username: username }) %>
+
+    <!-- Main Content -->
+    <div class="container">
+      <h1><%= message %></h1>
+      
+      <!-- Conditional Rendering -->
+      <% if (people.length > 0) { %>
+        <h2>People List:</h2>
+        <ul>
+          <% people.forEach(person => { %>
+          <li><%= person %></li>
+          <% }); %>
+        </ul>
+      <% } else { %>
+        <p>No people to display.</p>
+      <% } %>
+
+      <!-- Form Example -->
+      <form action="/submit" method="POST">
+        <label for="name">Enter a Name:</label>
+        <input type="text" id="name" name="name" required />
+        <button type="submit">Submit</button>
+      </form>
+    </div>
+
+    <!-- Include footer partial -->
+    <%- include('partials/footer.ejs') %>
+  </body>
+</html>
