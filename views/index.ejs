@@ -1,40 +1,89 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title><%= title %></title>
-    <link rel="stylesheet" href="/styles.css" />
-  </head>
-  <body>
-    <!-- Include header partial -->
-    <%- include('partials/header.ejs', { username: username }) %>
+<section>
+  <h1>Welcome to <%= title %>!</h1>
+  <form action="/add" method="POST">
+    <input type="text" name="item" placeholder="Add new item" required />
+    <button type="submit">Add</button>
+  </form><br>
 
-    <!-- Main Content -->
-    <div class="container">
-      <h1><%= message %></h1>
-      
-      <!-- Conditional Rendering -->
-      <% if (people.length > 0) { %>
-        <h2>People List:</h2>
-        <ul>
-          <% people.forEach(person => { %>
-          <li><%= person %></li>
-          <% }); %>
-        </ul>
-      <% } else { %>
-        <p>No people to display.</p>
-      <% } %>
+  <form action="/find" method="POST">
+    <input type="text" name="query" placeholder="Search items" required />
+    <button type="submit">Find</button>
+  </form><br>
 
-      <!-- Form Example -->
-      <form action="/submit" method="POST">
-        <label for="name">Enter a Name:</label>
-        <input type="text" id="name" name="name" required />
-        <button type="submit">Submit</button>
-      </form>
-    </div>
+  <form action="/sort" method="POST" style="display: inline;">
+    <button type="submit">Sort Items</button>
+  </form>
 
-    <!-- Include footer partial -->
-    <%- include('partials/footer.ejs') %>
-  </body>
-</html>
+  <ul id="items-list">
+    <% items.forEach((item, index) => { %>
+      <li class="item" data-index="<%= index %>">
+        <span class="item-name"><%= item.name %></span>
+        <div class="item-actions" style="display: none;">
+          <form action="/update" method="POST" style="display: inline;">
+            <input type="text" name="updatedItem" placeholder="Edit item" required />
+            <input type="hidden" name="index" value="<%= index %>" />
+            <button type="submit">Update</button>
+          </form>
+          <form action="/delete" method="POST" style="display: inline;">
+            <input type="hidden" name="index" value="<%= index %>" />
+            <button type="submit">Delete</button>
+          </form>
+        </div>
+      </li>
+    <% }); %>
+  </ul>
+</section>
+
+<script>
+  // JavaScript to handle click events
+  document.addEventListener("DOMContentLoaded", () => {
+    const items = document.querySelectorAll(".item");
+
+    items.forEach(item => {
+      item.addEventListener("click", () => {
+        const actions = item.querySelector(".item-actions");
+        if (actions) {
+          // Toggle visibility of Update/Delete buttons
+          actions.style.display = actions.style.display === "none" ? "block" : "none";
+        }
+      });
+    });
+  });
+</script>
+
+<!-- /*
+<section>
+  <h1>Welcome to <%= title %>!</h1>
+  <form action="/add" method="POST">
+    <input type="text" name="item" placeholder="Add new item" required />
+    <button type="submit">Add</button>
+  </form><br>
+
+  <form action="/find" method="POST">
+    <input type="text" name="query" placeholder="Search items" required />
+    <button type="submit">Find</button>
+  </form><br>
+
+  <form action="/sort" method="POST" style="display: inline;">
+    <button type="submit">Sort Items</button>
+  </form>
+
+  <ul>
+    <% items.forEach((item, index) => { %>
+      <li>
+        <!- <%= item.name %> (Added on: <%= item.createdAt.toLocaleString() %>) -
+        <%= item.name %> <br>
+        <form action="/update" method="POST" style="display: inline;">
+          <input type="text" name="updatedItem" placeholder="Edit item" required />
+          <input type="hidden" name="index" value="<%= index %>" />
+          <button type="submit">Update</button>
+        </form>
+        <form action="/delete" method="POST" style="display: inline;">
+          <input type="hidden" name="index" value="<%= index %>" />
+          <button type="submit">Delete</button>
+        </form>
+      </li>
+    <% }); %>
+  </ul>
+</section>
+*/ -->
