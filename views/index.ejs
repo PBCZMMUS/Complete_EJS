@@ -20,7 +20,7 @@
         <span class="item-name"><%= item.name %></span>
         <div class="item-actions" style="display: none;">
           <form action="/update" method="POST" style="display: inline;">
-            <input type="text" name="updatedItem" placeholder="Edit item" required />
+            <textarea name="updatedItem" placeholder="Edit item" required><%= item.name %></textarea>
             <input type="hidden" name="index" value="<%= index %>" />
             <button type="submit">Update</button>
           </form>
@@ -37,18 +37,49 @@
 <script>
   // JavaScript to handle click events
   document.addEventListener("DOMContentLoaded", () => {
-    const items = document.querySelectorAll(".item");
+  const items = document.querySelectorAll(".item");
 
-    items.forEach(item => {
-      item.addEventListener("click", () => {
-        const actions = item.querySelector(".item-actions");
-        if (actions) {
-          // Toggle visibility of Update/Delete buttons
-          actions.style.display = actions.style.display === "none" ? "block" : "none";
+  items.forEach(item => {
+    item.addEventListener("click", (event) => {
+      // Prevent form submission or other interactions when clicking the list item
+      event.stopPropagation();
+
+      const actions = item.querySelector(".item-actions");
+      const textarea = item.querySelector("textarea");
+
+      if (actions) {
+        // Toggle visibility of Update/Delete buttons
+        if (actions.style.display === "none" || actions.style.display === "") {
+          actions.style.display = "block";
+          if (textarea) {
+            textarea.focus(); // Focus the textarea when it's visible
+          }
+        } else {
+          actions.style.display = "none"; // Hide actions if clicked again
         }
+      }
+    });
+
+    // Prevent the form inside the item from being hidden when editing
+    const actions = item.querySelector(".item-actions");
+    if (actions) {
+      actions.addEventListener("click", (e) => {
+        e.stopPropagation(); // Stop event propagation to prevent hiding actions
       });
+    }
+  });
+
+  // Ensure that clicking outside of the item doesn't interfere with form submission
+  document.addEventListener('click', (event) => {
+    const actions = document.querySelectorAll('.item-actions');
+    actions.forEach(action => {
+      // Hide actions when clicking outside of them
+      if (!action.contains(event.target)) {
+        action.style.display = 'none';
+      }
     });
   });
+});
 </script>
 
 <!-- /*

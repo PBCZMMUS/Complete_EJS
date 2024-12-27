@@ -52,6 +52,7 @@ app.post("/find", (req, res) => {
 });
 
 // Update: Edit an item
+// Update: Edit an item
 app.post("/update", (req, res) => {
   const { index, updatedItem } = req.body;
   if (index !== undefined && updatedItem) {

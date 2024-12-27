@@ -46,10 +46,12 @@ li {
 }
 
 .item {
+  position: relative; /* Ensure positioning context for actions */
+  padding: 10px;
+  border: 1px solid #ddd;
+  margin-bottom: 10px;
   cursor: pointer;
-  margin-bottom: 1rem;
   line-height: 1.6;
-  padding: 3px;
   color: rgba(120, 119, 119, 0.869);
 }
 
@@ -61,7 +63,16 @@ li {
 }
 
 .item-actions {
-  margin-top: 0.5rem;
+  position: absolute; /* Avoid overlap */
+  z-index: 10;
+  display: none; /* Initially hidden */
+}
+
+textarea {
+  /* resize: none; Prevent resizing if not needed */
+  /* width: 100%; Ensure the textarea takes up the full width */
+  /* height: 50px; Adjust the height as needed */
+  z-index: 20; /* Ensure it's not overlapped by other elements */
 }
 
 #sort {
@@ -73,3 +84,4 @@ li {
   color: white;
   cursor: pointer;
 }
+
