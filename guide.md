@@ -1,14 +1,13 @@
 # Complete EJS
-    - Folder Structure
     project/
-    ├── views/
-    │   ├── index.ejs
-    │   ├── partials/
-    │   │   ├── header.ejs
-    │   │   ├── footer.ejs
-    ├── public/
-    │   └── styles.css
-    └── server.js
+├── views/
+│   ├── index.ejs       # Homepage
+│   ├── about.ejs       # About page
+│   ├── contact.ejs     # Contact page
+│   ├── layout.ejs      # Main layout file
+├── public/
+│   └── styles.css      # CSS for styling
+└── app.js              # Main server file
 
     - Note:
         -   When you add "type": "module" or .mjs extension
@@ -16,58 +15,37 @@
         -   If you don't put the "type": "module" or .mjs extension
             -   then you can use as node module like require (CommonJS)
 
+## Initialize the Project
+    -   npm init -y
+    -   npm install express express-ejs-layouts body-parser
 
-## Setting Up index.ejs
-    -   Add html boiler plate
-    -   Add header and footer in be included
+## Configure app.js
+    -   Set up server
+    -   Set up middleware
+    -   Set up EJS & Layouts
+    -   Set up routes
 
-## Setting Up header.ejs / footer.ejs
-    -   Add nav menu and some headings
-    -   Add copyright etc, at footer 
+    -   Options
+        -   ES Module (import/export)
+            -   Add "type": "module"
+        -   CommonJS (require/module.exports)
 
-## Setting Up app to render the EJs
-    -   Setting Up server
-    -   Setting Up EJS template engine
-    -   Adding routes
+## Create views/
+    -   layout.ejs
+    -   index.ejs
+    -   about.ejs
+    -   contact.ejs
 
-### Detail Explaination
-1. Dynamic Variables:
+## Create public/
+    -   styles.css
 
-    *   <%= title %>: Inserts the value of the title variable into the HTML.
-    *   <%= message %>: Displays a message passed to the template.
-    *   <%= username %>: Displays the username conditionally if it exists.
+## Run the server
+    -   node app.js OR npm run dev
+    -   OR 
+        -   npm install -g nodemon
+        -   nodemon app.js
 
-2. Loops:
-
-    *   <% people.forEach(person => { %> ... <% }); %>: Iterates over the people array and displays each person in a <li> element.
-
-3. Conditionals:
-
-    *   <% if (people.length > 0) { %> ... <% } else { %> ... <% } %>: Renders different content based on whether the people array has any elements.
-
-4. Includes:
-
-    *   <%- include('partials/header.ejs', { username: username }) %>: Includes the header.ejs partial, passing username to it.
-
-5.  Raw Include vs Escaped Content:
-
-    *   <%- include() %>: Inserts content as-is (raw HTML).
-    *   <%= %>: Escapes content for safety.
-    *   <% %>: Executes JavaScript code without rendering any output.
-
-6. Form Handling:
-
-    *   <form action="/submit" method="POST">: Illustrates how to create a simple form for user input.
-
-### Key Concepts for Beginners
-1. EJS Syntax:
-
-    -   <%= %>: Renders and escapes data.
-    -   <%- %>: Renders raw data (e.g., includes).
-    -   <% %>: Executes JavaScript.
-
-2. Passing Data: Data is passed to the template via the res.render() method in the Express route.
-
-3. Partial Templates: Helps avoid repeating common elements (e.g., headers, footers) across multiple pages.
-
-4. Form Handling: Demonstrates how to handle user input and update data dynamically.
+## Open your browser and navigate to:
+	•	http://localhost:3000/
+	•	http://localhost:3000/about
+	•	http://localhost:3000/contact
